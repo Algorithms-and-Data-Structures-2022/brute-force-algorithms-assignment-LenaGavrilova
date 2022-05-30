@@ -14,11 +14,15 @@ namespace assignment {
     const auto num_elems = static_cast<int>(set.size());  // N
     const int num_subsets = 1 << num_elems;               // 2^N
 
-    // 1. Внешний цикл: пробегаемся по всем битовым маскам от 0..00 до 1..11
-    // 2. Внутренний цикл: проверка разрядов битовой маски и генерация подмножества, ассоциирующегося с этой маской
-    // 3. Подсчет суммы текущего подмножества, сохранение индексов подмножества с целевой суммой в результат
-    // Tips: можно пропустить итерацию, если сумма текущего подмножества стала больше целевой суммы
-
+    for (int mask = 0; mask < num_subsets; mask++) {
+      auto subset = mask2indices(set, mask);
+      int sum = 0;
+      for (int i = 0; i < subset.size(); i++) {
+        sum += set[subset[i]];
+        if (sum > target_sum) { break; }
+      }
+      if (sum == target_sum) { indices.push_back(subset); }
+    }
     return indices;
   }
 

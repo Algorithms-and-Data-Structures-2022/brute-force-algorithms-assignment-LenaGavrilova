@@ -27,16 +27,16 @@ namespace assignment {
 
     // Ограничение: рассмотрены все элементы множества
     if (index == static_cast<int>(set.size()) - 1) {
-
-      // ... сохранение полученного подмножества
-
+      subsets.push_back(mask2indices(set, mask));
       return;  // возвращаемся по дереву рекурсии
     }
-
     index += 1;  // рассматриваем следующий элемент
+    if (is_bit_set(mask, index)) {
+      subsets.push_back(mask2indices(set, mask));
+    }
 
-    // здесь должны быть рекурсивные вызовы ...
-    // включаем или не включаем элемент с текущим индексом в подмножество (используя битовую маску)
+    generate(set, index, mask, subsets);
+    generate(set, index, set_bit(mask, index), subsets);
   }
 
 }  // namespace assignment
